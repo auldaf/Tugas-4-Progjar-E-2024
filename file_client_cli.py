@@ -17,7 +17,7 @@ def send_command(command_str=""):
         data_received="" #empty string
         while True:
             #socket does not receive all data at once, data comes in part, need to be concatenated at the end of process
-            data = sock.recv(16)
+            data = sock.recv(1024)
             if data:
                 #data is not empty, concat with previous content
                 data_received += data.decode()
@@ -68,7 +68,7 @@ def remote_upload(filename=""):
     try:
         with open(filename, 'rb') as fp:
             isiFile = base64.b64encode(fp.read()).decode()
-        command_str = f"UPLOAD {filename}\r\n\r\n" + isiFile + "\r\n\r\n"
+        command_str = f"UPLOAD {filename}" + isiFile+ "\r\n\r\n"
         hasil = send_command(command_str)
         if hasil['status'] == 'OK':
             print("Masuk")

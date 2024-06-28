@@ -29,12 +29,9 @@ class FileInterface:
     def upload(self, params=[]):
         try:
             filename = params[0]
-            
-            with open(f"{filename}",'wb') as fp:
-                print("MASOK")
-                isiFile = base64.b64decode(params[1])
-                fp.write(isiFile)
-                print("MASOK2")
+            filedata = params[1]
+            with open(f"{filename}", 'wb') as fp:
+                fp.write(base64.b64decode(filedata))
             return dict(status='OK', data=f"File {filename} berhasil diunggah")
         except Exception as e:
             return dict(status='ERROR', data=str(e))
